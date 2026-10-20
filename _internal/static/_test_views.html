@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>视图隔离测试</title></head>
+<body>
+<div id="app"></div>
+<div id="t"></div>
+<script src="/static/vendor/vue.global.prod.js"></script>
+<script src="/static/vendor/element-plus.js"></script>
+<script src="/static/admin/api.js"></script>
+<script src="/static/admin/charts.js"></script>
+<script src="/static/admin/views.js"></script>
+<script>
+window.R = [];
+function t(label, comp) {
+  const h = document.createElement('div');
+  document.body.appendChild(h);
+  try {
+    const app = Vue.createApp({});
+    app.use(ElementPlus);
+    app.component('V', comp);
+    const sub = Vue.createApp({ template: '<V/>' });
+    sub.use(ElementPlus);
+    sub.component('V', comp);
+    sub.mount(h);
+    const txt = h.innerText.slice(0, 60).replace(/\n+/g, ' | ');
+    window.R.push(label + ': OK ' + (txt || '(空)'));
+    sub.unmount();
+  } catch(e) {
+    window.R.push(label + ': FAIL ' + e.message);
+  }
+  h.remove();
+}
+t('DashboardView', window.DashboardView);
+t('RankingView', window.RankingView);
+t('ProductView', window.ProductView);
+t('CrawlView', window.CrawlView);
+t('AnalysisView', window.AnalysisView);
+t('AccountView', window.AccountView);
+t('SourceView', window.SourceView);
+t('RunView', window.RunView);
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>Vue 编译能力测试</title></head>
+<body>
+<div id="t1"></div><div id="t2"></div><div id="t3"></div><div id="t4"></div>
+<div id="t5"></div><div id="t6"></div>
+<script src="/static/vendor/vue.global.prod.js"></script>
+<script src="/static/vendor/element-plus.js"></script>
+<script>
+window.R = [];
+function t(id, tpl, useEP) {
+  try {
+    const app = Vue.createApp({ template: tpl, setup(){ return {}; } });
+    if (useEP) app.use(ElementPlus);
+    app.mount('#' + id);
+    app.unmount();
+    window.R.push(id + ': OK');
+  } catch(e) {
+    window.R.push(id + ': FAIL ' + e.message);
+  }
+}
+t('t1', '<div>{{1}}</div>');
+t('t2', '<div v-if="1">x</div>');
+t('t3', '<div v-for="i in [1]">{{i}}</div>');
+t('t4', '<el-dialog><template #footer><el-button>x</el-button></template></el-dialog>', true);
+t('t5', '<el-table><el-table-column prop="a" label="A" /></el-table>', true);
+t('t6', '<el-input :rows="7" placeholder="中文测试" />', true);
+</script>
+</body>
+</html>

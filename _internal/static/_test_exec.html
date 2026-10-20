@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>app.js 变体测试</title></head>
+<body>
+<div id="app"><div class="boot-loading">boot</div></div>
+<script src="/static/vendor/vue.global.prod.js"></script>
+<script src="/static/vendor/element-plus.js"></script>
+<script src="/static/vendor/echarts.min.js"></script>
+<script src="/static/vendor/axios.min.js"></script>
+<script>
+window.R = { done: false, log: [] };
+(async () => {
+  const src = await fetch('/static/admin/app.js').then(r => r.text());
+
+  function run(label, code) {
+    const host = document.createElement('div');
+    document.body.appendChild(host);
+    const old = document.getElementById('app');
+    const placeholder = document.createElement('div');
+    placeholder.id = 'app';
+    old.replaceWith(placeholder);
+    try {
+      (0, eval)(code);
+      const ok = host.children.length > 0;
+      window.R.log.push(label + ': ' + (ok ? 'OK 子节点=' + host.children.length : '无渲染'));
+      return ok;
+    } catch (e) {
+      window.R.log.push(label + ': FAIL ' + e.message);
+      return false;
+    } finally {
+      placeholder.remove();
+    }
+  }
+
+  // 变体 1：原文
+  try { run('原文', src); } catch(e) { window.R.log.push('变体1外层抛: ' + e.message); }
+  // 变体 2：去掉 onMounted(checkLogin)
+  try { run('去掉 onMounted', src.replace('onMounted(checkLogin);', '')); }
+  catch(e) { window.R.log.push('变体2外层抛: ' + e.message); }
+  // 变体 3：换挂载点
+  try { run('换挂载点', src.replace("app.mount('#app')", "app.mount(document.body.lastElementChild)")); }
+  catch(e) { window.R.log.push('变体3外层抛: ' + e.message); }
+
+  window.R.done = true;
+})();
+</script>
+</body>
+</html>

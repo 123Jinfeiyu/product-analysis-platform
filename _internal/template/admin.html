@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品分析平台</title>
+    <link rel="stylesheet" href="/static/vendor/element-plus.css">
+    <link rel="stylesheet" href="/static/admin/app.css">
+</head>
+<body>
+<div id="app">
+    <div class="boot-loading">系统加载中，请稍候……</div>
+</div>
+
+<!-- 顺序很重要：Vue / ElementPlus 是运行时依赖，必须最先加载 -->
+<script src="/static/vendor/vue.global.prod.js"></script>
+<script src="/static/vendor/element-plus.js"></script>
+<script src="/static/vendor/echarts.min.js"></script>
+<script src="/static/vendor/axios.min.js"></script>
+
+<!--
+  前端 js 全部内联，不用 <script src>。
+  原因：Django 静态视图返回 Content-Type: text/javascript 但**不带 charset**，
+  浏览器按本地编码（中文 Windows 是 GBK）解码，中文注释被解释成非法字节，
+  整份脚本 SyntaxError -> 页面白屏；而 <script src> 的语法错误**不会**上报到控制台，
+  表现只是「#app 一直空的」，极难定位。
+  HTML 已声明 charset=utf-8，所以内联的脚本一定是 UTF-8，绕开该问题。
+  vue / element-plus / echarts / axios 是纯压缩产物（无中文），保持外链。
+-->
+<script>{{ api_js|safe }}</script>
+<script>{{ charts_js|safe }}</script>
+<script>{{ views_js|safe }}</script>
+<script>{{ app_js|safe }}</script>
+</body>
+</html>

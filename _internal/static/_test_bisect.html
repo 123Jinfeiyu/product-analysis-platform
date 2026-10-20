@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><title>app.js 模板逐段二分</title></head>
+<body>
+<div id="app"><div class="boot-loading">boot</div></div>
+<div id="probe"></div>
+<script src="/static/vendor/vue.global.prod.js"></script>
+<script src="/static/vendor/element-plus.js"></script>
+<script src="/static/vendor/echarts.min.js"></script>
+<script src="/static/vendor/axios.min.js"></script>
+<script>
+window.R = { done: false, log: [] };
+(async () => {
+  const src = await fetch('/static/admin/app.js').then(r => r.text());
+  const ti = src.indexOf('template: `');
+  const te = src.lastIndexOf('`,');
+  const tpl = src.slice(ti + 12, te + 1);
+
+  // 保留 setup 的真实返回值：直接执行 app.js 但不挂载
+  const si = src.indexOf('setup() {');
+  const bodyStart = si + 'setup() {'.length;
+  const ri = src.indexOf('return {', bodyStart);
+  const bs2 = src.indexOf('{', ri);
+  let d = 0, end = bs2;
+  for (let k = bs2; k < src.length; k++) {
+    if (src[k] === '{') d++;
+    else if (src[k] === '}') { d--; if (d === 0) { end = k; break; } }
+  }
+  const setupBody = src.slice(bodyStart, ri);
+  const retObj = src.slice(bs2, end + 1);
+  window.__setupBody = setupBody;
+  window.__retObj = retObj;
+
+  function tryMount(t) {
+    const h = document.createElement('div');
+    document.body.appendChild(h);
+    try {
+      const app = Vue.createApp({
+        template: t,
+        setup() { return new Function(window.__setupBody + window.__retObj)(); },
+      });
+      app.use(ElementPlus);
+      app.mount(h); app.unmount(); h.remove();
+      return null;
+    } catch (e) { h.remove(); return e.message; }
+  }
+
+  const log = [];
+  const full = tryMount(tpl);
+  log.push('整块: ' + (full || 'OK'));
+
+  if (full) {
+    // 按行二分
+    const lines = tpl.split('\n');
+    let lo = 0, hi = lines.length;
+    // 先找到最小失败区间
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1;
+      const a = tryMount(lines.slice(lo, mid).join('\n'));
+      const b = tryMount(lines.slice(mid, hi).join('\n'));
+      if (a) { hi = mid; continue; }
+      if (b) { lo = mid; continue; }
+      // 两半都不失败但整体失败 -> 可能是结构性问题，继续二分到行
+      hi = mid; lo = mid - 1;
+    }
+    log.push('可疑区间 ' + (lo+1) + ' ~ ' + hi);
+    for (let k = Math.max(0, lo-2); k <= Math.min(lines.length, hi+2); k++) {
+      log.push('  行' + (k+1) + ': ' + lines[k]);
+    }
+  }
+  window.R.log = log;
+  window.R.done = true;
+})();
+</script>
+</body>
+</html>

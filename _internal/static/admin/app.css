@@ -1,0 +1,453 @@
+/* 商品分析平台 —— 全局样式
+ *
+ * 布局用 flex/grid，不引第三方 UI 框架，跟 ElementPlus 保持一致的圆角和留白。
+ */
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Microsoft YaHei", "PingFang SC", -apple-system, Arial, sans-serif;
+    background: #f0f2f5;
+    color: #303133;
+}
+
+#app, .root { height: 100vh; }
+
+.boot-loading {
+    padding: 80px 0;
+    text-align: center;
+    color: #909399;
+    font-size: 14px;
+}
+
+/* ---------- 登录页 ---------- */
+.login-wrap {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+    width: 360px;
+    border-radius: 10px;
+}
+
+.login-title {
+    margin: 0 0 4px;
+    text-align: center;
+    font-size: 21px;
+}
+
+.login-sub {
+    margin: 0 0 22px;
+    text-align: center;
+    color: #909399;
+    font-size: 13px;
+}
+
+.login-btn { width: 100%; }
+
+.login-tip {
+    margin: 14px 0 0;
+    text-align: center;
+    color: #c0c4cc;
+    font-size: 12px;
+}
+
+/* ---------- 主框架 ---------- */
+.layout { height: 100vh; }
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-bottom: 1px solid #e4e7ed;
+    padding: 0 20px;
+}
+
+.brand {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.spacer { flex: 1; }
+
+.who {
+    margin-right: 14px;
+    color: #606266;
+    font-size: 13px;
+}
+
+.side {
+    background: #fff;
+    border-right: 1px solid #e4e7ed;
+    overflow-y: auto;
+}
+
+.side .el-menu { border-right: none; }
+
+.main {
+    padding: 14px;
+    overflow-y: auto;
+}
+
+/* ---------- 视图通用 ---------- */
+.view { min-height: 100%; }
+
+.page-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.page-head h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+/* ---------- 统计卡片 ---------- */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.stat-card .el-card__body {
+    text-align: center;
+    padding: 16px 8px;
+}
+
+.stat-num {
+    font-size: 22px;
+    font-weight: 600;
+    color: #409eff;
+    line-height: 1.3;
+}
+
+.stat-lb {
+    margin-top: 4px;
+    color: #909399;
+    font-size: 12px;
+}
+
+/* ---------- 图表 ---------- */
+.chart {
+    width: 100%;
+    height: 300px;
+}
+
+.chart-tall { height: 380px; }
+
+/* ---------- 表格 ---------- */
+.cell-title {
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.cell-sub {
+    margin-top: 2px;
+    color: #909399;
+    font-size: 12px;
+}
+
+.pager {
+    margin-top: 14px;
+    justify-content: flex-end;
+}
+
+/* ---------- 其它 ---------- */
+.logbox {
+    margin: 0;
+    padding: 10px;
+    height: 190px;
+    overflow: auto;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.hint {
+    margin: 0 0 12px;
+    color: #909399;
+    font-size: 13px;
+    line-height: 1.7;
+}
+/* ---------- AI 助手 ---------- */
+.ai-form { margin-bottom: 2px; }
+
+.ai-cfg { margin-bottom: 12px; }
+
+.ai-cfg-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.ai-link {
+    margin-left: 12px;
+    color: #409eff;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.ai-link:hover { text-decoration: underline; }
+
+.ai-card { position: relative; margin-bottom: 12px; }
+
+.ai-score {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #e6a23c;
+    line-height: 1;
+}
+
+.ai-score span { font-size: 12px; font-weight: 400; }
+
+.ai-title {
+    margin: 0 42px 6px 0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.ai-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #909399;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.ai-reason {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #606266;
+    min-height: 44px;
+}
+
+.ai-tags { margin-top: 8px; }
+
+.ai-actions { margin-top: 10px; display: flex; gap: 8px; }
+
+/* ---------- 商品管理 CRUD ---------- */
+
+/* 缩略图与标题并排 */
+.cell-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.cell-title {
+    display: flex;
+    align-items: center;
+}
+
+.cell-title-text {
+    line-height: 1.5;
+    /* 标题可能有 300 字，列表里限两行 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 批量操作条：勾选后从表格上方滑出来 */
+.batch-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    background: #ecf5ff;
+    border: 1px solid #d9ecff;
+    border-radius: 4px;
+}
+
+.batch-bar .spacer { flex: 1; }
+
+/* ---------- 详情抽屉 ---------- */
+.detail-head {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.detail-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    border: 1px solid #ebeef5;
+}
+
+.detail-title {
+    margin: 0 0 6px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.detail-desc {
+    margin-top: 4px;
+}
+
+/* 抽屉里的链接跟 AI 页共用一套样式，单独写一份免得跨模块耦合 */
+.detail-desc a {
+    color: #409eff;
+    word-break: break-all;
+}
+
+/* ---------- 维度分析 ---------- */
+.dim-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.dim-head .hint {
+    margin: 0;
+}
+
+/* 表格行高放宽、字号回正常。
+   Element 的 size="small" 行高只有 24px，六列数字挤在一起根本看不清，
+   维度分析页宁可多占点地方也要让每个数字读得清。 */
+.dim-table .cell {
+    padding: 9px 0;
+    line-height: 1.6;
+}
+
+.dim-table .el-table__cell {
+    white-space: nowrap;
+}
+
+/* 列宽写死之后，最后一列不拉伸，右侧留一点呼吸空间 */
+.dim-card .el-table {
+    width: 100%;
+}
+
+/* ---------- 上传导入 ---------- */
+.imp-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 14px;
+    background: #fafafa;
+    border: 1px dashed #dcdfe6;
+    border-radius: 4px;
+}
+
+.imp-row .spacer { flex: 1; }
+
+.imp-result { margin-top: 4px; }
+
+.imp-stat {
+    display: flex;
+    gap: 20px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    background: #f4f4f5;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.imp-stat strong {
+    margin: 0 2px;
+    font-size: 16px;
+    color: #409eff;
+}
+
+.imp-stat .err, .imp-stat .err strong { color: #f56c6c; }
+
+/* ---------- 数据接口 ---------- */
+.probe-box { margin: -4px 0 6px; }
+
+.probe-detail {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: #fafafa;
+    border: 1px solid #ebeef5;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.probe-detail code {
+    padding: 1px 5px;
+    background: #ecf5ff;
+    border-radius: 3px;
+    color: #476582;
+    font-size: 12px;
+}
+
+.probe-detail pre {
+    margin: 4px 0 0;
+    padding: 8px;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 1.6;
+    overflow-x: auto;
+    max-height: 180px;
+}
+
+.map-help .hint { margin: 0; }
+
+/* ---------- 侧栏「显示全部功能」开关 ----------
+   爬虫、接口接入这类功能默认收起，点这里展开。
+   刻意做成不起眼的灰字 + 虚线框：主菜单才是主角，
+   这个按钮存在的意义是「让功能找得到」，不是天天点。 */
+.side-toggle {
+    margin: 10px;
+    padding: 8px 6px;
+    border: 1px dashed #dcdfe6;
+    border-radius: 4px;
+    color: #909399;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: all .15s;
+}
+
+.side-toggle:hover {
+    color: #409eff;
+    border-color: #409eff;
+    background: #ecf5ff;
+}
